@@ -9,6 +9,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
 To start Metro, run the following command from the _root_ of your React Native project:
+![switch color](https://github.com/sunnyvicap/ColorSwitchTheme/assets/28058594/0c772e15-d7b3-45cd-8257-360ba3696b1b)
 
 ```bash
 # using npm
