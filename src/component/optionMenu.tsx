@@ -1,6 +1,7 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Divider, Menu } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTheme } from "./themeContext";
 
 interface OptionMenuProps {
   onSelectTheme: (theme: string) => void;
@@ -8,6 +9,8 @@ interface OptionMenuProps {
 
 const OptionMenu : React.FC<OptionMenuProps> = ({ onSelectTheme }) => {
   const [visible, setVisible] = useState(false);
+
+  const theme = useTheme();
 
   const openMenu = () => setVisible(true);
 
@@ -22,23 +25,32 @@ const OptionMenu : React.FC<OptionMenuProps> = ({ onSelectTheme }) => {
     <Menu
       visible={visible}
       onDismiss={closeMenu}
-      anchor={<MaterialCommunityIcons name="dots-vertical" size={25} onPress={openMenu} />}>
+      anchor={<MaterialCommunityIcons name="dots-vertical" size={25} color={theme.theme.colors.topTab.activeColor} onPress={openMenu} />}>
       <Menu.Item onPress={() =>  handleThemeSelection('Green')} title="Green theme" />
       <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Pink')} title="Pink theme" />
       <Divider />
+      <Menu.Item onPress={() => handleThemeSelection('Deep Purple')} title="Deep Purple'" />
+      <Divider />
+      <Menu.Item onPress={() => handleThemeSelection('Light Blue')} title="Light Blue" />
+      <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Purple')} title="Purple theme" />
       <Divider />
+      <Menu.Item onPress={() => handleThemeSelection('Light Green')} title="Light Green" />
+      <Divider />
+      <Menu.Item onPress={() => handleThemeSelection('Lime')} title="Lime" />
+      <Divider />
+      <Menu.Item onPress={() => handleThemeSelection('Yellow')} title="Yellow" />
+      <Divider />
+      <Menu.Item onPress={() => handleThemeSelection('Teal')} title="Teal" />
       <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Red')} title="Red theme" />
       <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Blue')} title="Blue theme" />
       <Divider />
-      <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Indigo')} title="Indigo theme" />
       <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Cyan')} title="Cyan theme" />
-      <Divider />
       <Divider />
       <Menu.Item onPress={() => handleThemeSelection('Amber')} title="Amber theme" />
       <Divider />

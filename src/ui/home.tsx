@@ -3,14 +3,13 @@ import Latest from './home/latest';
 import Notification from './home/notification';
 import Disscussion from './home/disscussion';
 import Jobs from './home/jobs';
-import { useWindowDimensions } from 'react-native';
-import { useState } from 'react';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '../component/themeContext';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function Home() {
-    const theme = useTheme();
+export default function Home({}) {
+    const theme = useTheme().theme;
+
     return (
         <Tab.Navigator
             initialRouteName='Latest'
@@ -25,19 +24,20 @@ export default function Home() {
                 tabBarAllowFontScaling: true,
                 tabBarGap: 1,
                 tabBarStyle: {
-                    backgroundColor : theme.colors.primary,
+                    backgroundColor : theme.colors.appBar,
                 },
                 tabBarLabelStyle: {
                     fontWeight: "bold",
                     textTransform: 'capitalize',
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontFamily: 'OpenSans-Regular',
+                    color : theme.colors.topTab.activeColor
                 },
                 tabBarIndicatorStyle: {
                     height: 5,
                     borderRadius: 4,
                     flexDirection: 'row',
-                    marginHorizontal : 10,
-                    backgroundColor: theme.colors.surface,
+                    backgroundColor: theme.colors.topTab.activeColor,
                 },
 
             }}>
@@ -46,7 +46,7 @@ export default function Home() {
                     tabBarLabel: 'Latest'
                 }} />
             <Tab.Screen name="Notification" component={Notification} options={{
-                tabBarLabel: 'Notification'
+                tabBarLabel: 'Govt. Release'
             }} />
             <Tab.Screen name="Jobs" component={Jobs} options={{
                 tabBarLabel: 'Jobs'

@@ -5,90 +5,99 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DarkTheme, NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import Main from './ui';
-import OptionMenu from './component/colorMenu';
+import OptionMenu from './component/optionMenu';
 import { PaperProvider } from 'react-native-paper';
-import { AppDarkTheme, ThemeAmber, ThemeBlue, ThemeBrown, ThemeCyan, ThemeDeepOrange, ThemeGreen, ThemeIndigo, ThemeOrange, ThemePink, ThemePurple, ThemeRed } from './component/themeContext';
+import { ThemeProvider, useTheme } from './component/themeContext';
 
 const Stack = createNativeStackNavigator();
 
-function App() {
-  const [myTheme, setMyTheme] = useState(ThemeBlue);
-
-  const switchColorTheme = (name: String) => {
-    switch (name) {
-      case 'Dark':
-        setMyTheme(AppDarkTheme);
-        break;
-      case 'Indigo':
-        setMyTheme(ThemeIndigo);
-        break;
-      case 'Green':
-        setMyTheme(ThemeGreen);
-        break;
-      case 'Red':
-        setMyTheme(ThemeRed);
-        break;
-      case 'Pink':
-        setMyTheme(ThemePink);
-        break;
-      case 'Purple':
-        setMyTheme(ThemePurple);
-        break;
-      case 'Cyan':
-        setMyTheme(ThemeCyan);
-        break;
-      case 'Amber':
-        setMyTheme(ThemeAmber);
-        break;
-      case 'Orange':
-        setMyTheme(ThemeOrange);
-        break;
-      case 'Deep Orange':
-        setMyTheme(ThemeDeepOrange);
-        break;
-      case 'Brown':
-        setMyTheme(ThemeBrown);
-        break;
-
-      default:
-        setMyTheme(ThemeBlue)
-        break;
-    }
-  }
-
+function AppContent(){
+  const { theme, switchColorTheme } = useTheme();
 
   return (
-    <PaperProvider theme={myTheme}>
-      <NavigationContainer theme={myTheme}>
-        <Stack.Navigator initialRouteName='Main' screenOptions={{
-          headerTitle: 'What-Next',
-          headerTitleAlign: 'center',
-          headerShadowVisible: false,
-          statusBarColor: myTheme.colors.primary,
-          headerStyle: {
-            backgroundColor: myTheme.colors.primary,
-          },
-          headerTitleStyle: {
-            fontFamily: 'OpenSans-Regular',
-            fontWeight: 'bold',
-            fontSize: 20
-          }
-        }}>
-          <Stack.Screen name='Main' component={Main}
-            options={{
-              headerRight: () => (
-                <OptionMenu onSelectTheme={(name) => {
-                  switchColorTheme(name);
-                }} />
-              ),
-            }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <PaperProvider theme={theme}>
+    <NavigationContainer theme={theme}>
+      <Stack.Navigator initialRouteName='Main' screenOptions={{
+        headerTitle: 'What-Next',
+        headerTitleAlign: 'center',
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: theme.colors.appBar,
+        },
+        headerTitleStyle: {
+          fontFamily: 'OpenSans-Regular',
+          fontWeight: 'bold',
+          fontSize: 20,
+          color: theme.colors.topTab.activeColor
+        }
+      }}>
+        <Stack.Screen name='Main' component={Main}
+          options={{
+            headerRight: () => (
+              <OptionMenu onSelectTheme={(name) => {
+                console.log(name)
+                switchColorTheme(name);
+              }} />
+            ),
+          }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  </PaperProvider>
+  )
+}
+
+function App() {
+ 
+  // const switchColorTheme = (name: String) => {
+  //   switch (name) {
+  //     // case 'Dark':
+  //     //   setMyTheme(AppDarkTheme);
+  //     //   break;
+  //     // case 'Indigo':
+  //     //   setMyTheme(ThemeIndigo);
+  //     //   break;
+  //     // case 'Green':
+  //     //   setMyTheme(ThemeGreen);
+  //     //   break;
+  //     // case 'Red':
+  //     //   setMyTheme(ThemeRed);
+  //     //   break;
+  //     // case 'Pink':
+  //     //   setMyTheme(ThemePink);
+  //     //   break;
+  //     // case 'Purple':
+  //     //   setMyTheme(ThemePurple);
+  //     //   break;
+  //     // case 'Cyan':
+  //     //   setMyTheme(ThemeCyan);
+  //     //   break;
+  //     // case 'Amber':
+  //     //   setMyTheme(ThemeAmber);
+  //     //   break;
+  //     // case 'Orange':
+  //     //   setMyTheme(ThemeOrange);
+  //     //   break;
+  //     // case 'Deep Orange':
+  //     //   setMyTheme(ThemeDeepOrange);
+  //     //   break;
+  //     // case 'Brown':
+  //     //   setMyTheme(ThemeBrown);
+  //     //   break;
+
+  //     default:
+  //       setMyTheme(AppLightTheme)
+  //       break;
+  //   }
+  // }
+
+  return (
+    <ThemeProvider>
+       <AppContent/>
+    </ThemeProvider>
   );
 }
 

@@ -4,42 +4,59 @@ import React from "react";
 import Home from "./home";
 import { AudioVideo } from "./audiovideo";
 import { Magasine } from "./magasine";
-import { useTheme } from "react-native-paper";
+import { useTheme } from "../component/themeContext";
+import { Event } from "./event";
 
 const Tab = createBottomTabNavigator();
 
 export default function Main() {
-    const theme = useTheme();
+    const theme = useTheme().theme;
     return (
         <Tab.Navigator
             initialRouteName="Home"
-            screenOptions={{
-                headerShown: false, 
-                tabBarShowLabel: false,
-                tabBarActiveTintColor : theme.colors.onPrimary,
-                tabBarStyle : {
-                    height : 50,
-                    backgroundColor : theme.colors.primary
-                }
-            }}>
+            screenOptions={({ route }) => ({
+                headerShown: false,
+                tabBarActiveTintColor: theme.colors.bottomTab.activeColor,
+                tabBarInactiveTintColor: theme.colors.bottomTab.inactiveColor,
+                tabBarStyle: {
+                    position: 'relative',
+                    backgroundColor: theme.colors.topTab.backgroundColor,
+                    paddingBottom: 4,
+      paddingTop: 4,
+                },
+                tabBarLabelStyle: {
+                    fontFamily: 'Roboto-Regular',
+                    fontSize: 12,
+                    fontWeight : 'bold'
+                },
+                tabBarIcon: ({ focused, color }) => {
+                    let iconName = 'home';
+
+                    if (route.name === 'Home') {
+                        iconName = 'home';
+                    } else if (route.name === 'Playlist') {
+                        iconName = 'play';
+                    } else if (route.name === 'Magsine') {
+                        iconName = 'book';
+                    } else if (route.name === 'Setting') {
+                        iconName = 'gear';
+                    }
+
+                    return <Octicons name={iconName} color={color} size={20} />
+                },
+            })}>
             <Tab.Screen
                 name="Home"
                 component={Home}
                 options={{
                     tabBarLabel: 'Home',
-                    tabBarIcon: ({color }) => (
-                       <Octicons name="home" color={color} size={25} />
-                    ),
                 }}
             />
             <Tab.Screen
                 name="Playlist"
                 component={AudioVideo}
                 options={{
-                    tabBarLabel: 'Playlist',
-                    tabBarIcon: ({ color }) => (
-                        <Octicons name="play" color={color} size={25} />
-                    ),
+                    tabBarLabel: 'Playlist'
                 }}
             />
             <Tab.Screen
@@ -47,19 +64,13 @@ export default function Main() {
                 component={Magasine}
                 options={{
                     tabBarLabel: 'Magsine',
-                    tabBarIcon: ({ color }) => (
-                        <Octicons name="book" color={color} size={25} />
-                    ),
                 }}
             />
             <Tab.Screen
-                name="Event"
-                component={Magasine}
+                name="Setting"
+                component={Event}
                 options={{
-                    tabBarLabel: 'Event',
-                    tabBarIcon: ({ color }) => (
-                        <Octicons name="star" color={color} size={25} />
-                    ),
+                    tabBarLabel: 'Setting',
                 }}
             />
         </Tab.Navigator>

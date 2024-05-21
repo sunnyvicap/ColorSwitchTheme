@@ -40,7 +40,7 @@ const LatestPostCard = (item: { id?: number; title: any; description?: string; u
                 fontSize: 12,
                 fontWeight: '300',
                 marginTop: 5,
-                fontFamily :'Roboto-Regular'
+                fontFamily :'OpenSans-Regular'
             }}>{item.description}</Text>
             <Image
                 height={200}
